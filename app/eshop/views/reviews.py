@@ -1,6 +1,9 @@
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import UpdateView, DeleteView, CreateView
 from eshop.models import Review
 from eshop.forms import ReviewForm
+
+from eshop.models import Product
 
 
 class ReviewDeleteView(DeleteView):
@@ -25,6 +28,10 @@ class ReviewAddView(CreateView):
     success_url = '/'
 
     def form_valid(self, form):
-        form.instance.product_id = self.kwargs['pk']
-        return super(ReviewAddView, self).form_valid(form)
+        product = get_object_or_404(Product, pk=self.kwargs.get('pk'))
+        form.instance.author = self.request.user
+        review = form.save(commit=False)
+        review.product = product
+        review.save()
+        return redirect('product_detail', pk=product.pk)
 

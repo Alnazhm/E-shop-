@@ -19,7 +19,12 @@
             </a>
        </div>
         <div class="col-2 text-center">
-        <p class="card-text">Средняя оценка: <strong>{{ avg_rate.avg }}</strong></p>
+            {% if avg_rate.avg is not None %}
+            <p class="card-text">Средняя оценка: <strong>{{ avg_rate.avg }}</strong></p>
+                    {% else %}
+                        <p>0</p>
+                    {% endif %}
+
         </div>
         {% for rev in reviews %}
         <div class="container">
