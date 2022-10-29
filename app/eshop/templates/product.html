@@ -13,11 +13,13 @@
       </div>
 
     <div class="row">
+        {% if request.user.is_authenticated %}
        <div class="col-2 text-center">
             <a href="{% url 'review_create' product.pk %}">
                 <button type="submit" class="btn btn-primary btn-block">Добавить отзыв</button>
             </a>
        </div>
+        {% endif %}
         <div class="col-2 text-center">
             {% if avg_rate.avg is not None %}
             <p class="card-text">Средняя оценка: <strong>{{ avg_rate.avg }}</strong></p>

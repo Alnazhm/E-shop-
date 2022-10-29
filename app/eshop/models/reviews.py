@@ -48,3 +48,4 @@ class Review(models.Model):
         self.deleted_at = timezone.now()
         self.is_deleted = True
         self.save()
+

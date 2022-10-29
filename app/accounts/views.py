@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.forms import LoginForm
-from django.core.paginator import Paginator
 from accounts.forms import CustomUserCreationForm, PasswordChangeForm
 from accounts.forms import UserChangeForm
-
 from eshop.models import Review
 
 
@@ -111,6 +110,12 @@ class UserChangeView(UpdateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.object.pk})
 
+    def dispatch(self, request, *args, **kwargs):
+        author = User.objects.get(pk=self.kwargs.get('pk'))
+        if request.user != author:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
 
 class UserPasswordChangeView(UpdateView):
     model = get_user_model()
@@ -120,4 +125,10 @@ class UserPasswordChangeView(UpdateView):
 
     def get_success_url(self):
         return reverse('login')
+
+    def dispatch(self, request, *args, **kwargs):
+        author = User.objects.get(pk=self.kwargs.get('pk'))
+        if request.user != author:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
 

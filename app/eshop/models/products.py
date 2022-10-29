@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.db.models import TextChoices
-from django.db.models import Avg
+
 
 
 class CategoryChoices(TextChoices):

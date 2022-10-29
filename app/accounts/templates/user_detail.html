@@ -12,12 +12,14 @@
     <p>Почта: {{ user_obj.email }}</p>
 
  <div class="row">
+     {% if request.user == user_obj%}
       <div class="col-2 text-center">
         <a href="{% url 'change' user_obj.pk %}"><button type="submit" class="btn btn-primary btn-block">Редактировать</button></a>
     </div>
      <div class="col-2 text-center">
         <a href="{% url 'password_change' user_obj.pk %}"><button type="submit" class="btn btn-primary btn-block">Смена пароля</button></a>
     </div>
+     {% endif %}
  </div>
 
 
@@ -38,6 +40,7 @@
           <tr>
             <td>{{ rev.author }}</td>
             <td>{{rev.description}}</td>
+              {% if request.user.username == rev.author or request.user.groups == 'moderators' %}
             <td>
                 <a class="card-link" href="{% url 'review_edit' rev.pk %}">
               <button class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>
@@ -48,6 +51,7 @@
                     </button>
                 </a>
             </td>
+              {% endif %}
           </tr>
         </tbody>
       </table>
