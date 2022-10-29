@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Подтверждение удаление
+{% endblock %}
+{% block content %}
+<h4>Вы точно хотите удалить?</h4>
+<p> Товар {{ product.title }}</p>
+<p> Описание {{ product.description }}</p>
+<form action="{% url 'confirm_delete' product.pk  %}" method="POST">
+{% csrf_token %}
+    <input class="btn btn-primary" type="submit" value="Yes">
+    <a href="{% url 'products' %}" class="btn btn-primary" role="button">No</a>
+</form>
+
+{% endblock %}

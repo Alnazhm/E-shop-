@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+Подтверждение удаление отзыва
+{% endblock %}
+{% block content %}
+<h4>Вы точно хотите удалить?</h4>
+<p> Отзыв {{ review.author }}</p>
+<p> Описание {{ review.description }}</p>
+<form action="{% url 'confirm_delete_review' review.pk  %}" method="POST">
+{% csrf_token %}
+    <input class="btn btn-primary" type="submit" value="Да">
+    <a href="{% url 'products' %}" class="btn btn-primary" role="button">Нет</a>
+</form>
+
+{% endblock %}

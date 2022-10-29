@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+    <div class="container">
+        <div class="box">
+            <div class="head_text heading text-center">
+                <p class="main-title-home">Редактирование товара</p>
+            </div>
+           <form action="{% url 'product_edit' product.pk %}" method="POST">
+               {% csrf_token%}
+               <div class="form">
+                    {% include 'partials/product_form.html' with button_text='Сохранить' %}
+               </div>
+           </form>
+        </div>
+    </div>
+{% endblock %}

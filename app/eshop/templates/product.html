@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+{%block content%}
+
+<div class="row mx-auto">
+    <div class="col-md-4">
+      <img src="{{product.image.url}}" class="card-img" alt="">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+          <p>{{product.category}}</p>
+          <p class="card-text"><b>{{product.description}}</b></p>
+      </div>
+
+    <div class="row">
+       <div class="col-2 text-center">
+            <a href="{% url 'review_create' product.pk %}">
+                <button type="submit" class="btn btn-primary btn-block">Добавить отзыв</button>
+            </a>
+       </div>
+        <div class="col-2 text-center">
+        <p class="card-text">Средняя оценка: <strong>{{ avg_rate.avg }}</strong></p>
+        </div>
+        {% for rev in reviews %}
+        <div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Автор отзыва</th>
+            <th scope="col">Текст отзыва</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="{% url 'profile' rev.author.pk %}"><p>{{ rev.author.username }}</p></a></td>
+            <td>{{rev.description}}</td>
+            <td>
+                <a class="card-link" href="{% url 'review_edit' rev.pk %}">
+              <button class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>
+                </a>
+                <a class="card-link" href="{% url 'review_delete' rev.pk %}">
+                    <button type="button" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+        {% endfor %}
+
+    </div>
+</div>
+{%endblock%}

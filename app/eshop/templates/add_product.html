@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+    <div class="container">
+        <div class="box">
+            <div class="head_text heading text-center">
+                <p class="main-title-home"> Создание нового продукта</p>
+            </div>
+           <form action="{% url 'product_add' %}" enctype="multipart/form-data" method="POST">
+               {% csrf_token%}
+               <div class="form">
+                    {% include 'partials/product_form.html' with button_text='Добавить продукт' %}
+               </div>
+           </form>
+        </div>
+    </div>
+{% endblock %}

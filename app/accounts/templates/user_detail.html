@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Пользователь{% endblock %}
+{% block content %}
+    <br>
+<br>
+<br>
+<br>
+    <h1>Личная страница пользователя {{ user_obj.username }}</h1>
+    <p>Имя пользователя: {{ user_obj.username }}</p>
+    <p>Имя: {{ user_obj.first_name }}</p>
+    <p>Фамилия: {{ user_obj.last_name }}</p>
+    <p>Почта: {{ user_obj.email }}</p>
+
+ <div class="row">
+      <div class="col-2 text-center">
+        <a href="{% url 'change' user_obj.pk %}"><button type="submit" class="btn btn-primary btn-block">Редактировать</button></a>
+    </div>
+     <div class="col-2 text-center">
+        <a href="{% url 'password_change' user_obj.pk %}"><button type="submit" class="btn btn-primary btn-block">Смена пароля</button></a>
+    </div>
+ </div>
+
+
+
+    <h2 class="text-center clear">Отзывы:</h2>
+     {% for rev in reviews %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Автор отзыва</th>
+            <th scope="col">Текст отзыва</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ rev.author }}</td>
+            <td>{{rev.description}}</td>
+            <td>
+                <a class="card-link" href="{% url 'review_edit' rev.pk %}">
+              <button class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>
+                </a>
+                <a class="card-link" href="{% url 'review_delete' rev.pk %}">
+                    <button type="button" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+            {% endfor %}
+
+{% endblock %}
